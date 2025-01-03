@@ -26,10 +26,10 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
-            <Link>HOME</Link>
+            <Link to='/'>HOME</Link>
             <Link>CONTACT US</Link>
             <Link>DASHBOARD</Link>
-            <Link>OUR MENU</Link>
+            <Link to='menu'>OUR MENU</Link>
             <Link>OUR SHOP</Link>
           </ul>
         </div>
@@ -42,10 +42,10 @@ const Navbar = () => {
         {/* menu */}
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1 space-x-4 font-bold">
-            <Link>HOME</Link>
+            <Link to='/'>HOME</Link>
             <Link>CONTACT US</Link>
             <Link>DASHBOARD</Link>
-            <Link>OUR MENU</Link>
+            <Link to='menu'>OUR MENU</Link>
             <Link>OUR SHOP</Link>
           </ul>
         </div>
