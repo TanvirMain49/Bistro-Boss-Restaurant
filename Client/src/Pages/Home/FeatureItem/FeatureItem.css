@@ -1,0 +1,33 @@
+.Feature-section {
+    position: relative; /* Ensures positioning context for the overlay */
+    background-image: url('../../../assets/home/featured.jpg'); /* Background image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    padding: 80px 20px; 
+}
+
+/* Add a black overlay */
+.Feature-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black; 
+    opacity: 0.5; 
+    z-index: 1; 
+}
+
+/* Ensure all child content stays above the overlay */
+.Feature-section > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Image styling */
+.Feature-section img {
+    border-radius: 8px; /* Optional: Add a border-radius to the image */
+}
+
