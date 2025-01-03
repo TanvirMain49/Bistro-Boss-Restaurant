@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link>OUR SHOP</Link>
           </ul>
         </div>
-        <Link className="">
+        <Link className="titleFont">
         <span className="text-xl font-bold">BISTRO BOSS</span><br/>
         <span className="text-base">Restaurant</span>
         </Link>
