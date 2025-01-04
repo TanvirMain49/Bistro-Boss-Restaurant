@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SectionHeading from "../../Component/SectionHeading";
-import Card from "../../Component/Card";
+import Card from "../../Shared/Card";
 
 const ChefRecommended = () => {
   const [menu, setMenu] = useState([]);

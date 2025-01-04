@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -26,11 +26,11 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
-            <Link to='/'>HOME</Link>
-            <Link>CONTACT US</Link>
-            <Link>DASHBOARD</Link>
-            <Link to='menu'>OUR MENU</Link>
-            <Link>OUR SHOP</Link>
+            <NavLink to='/'>HOME</NavLink>
+            <NavLink>CONTACT US</NavLink>
+            <NavLink>DASHBOARD</NavLink>
+            <NavLink to='menu'>OUR MENU</NavLink>
+            <NavLink to='order'>OUR SHOP</NavLink>
           </ul>
         </div>
         <Link className="titleFont">
@@ -46,7 +46,7 @@ const Navbar = () => {
             <Link>CONTACT US</Link>
             <Link>DASHBOARD</Link>
             <Link to='menu'>OUR MENU</Link>
-            <Link>OUR SHOP</Link>
+            <NavLink to='order/salad'>OUR SHOP</NavLink>
           </ul>
         </div>
 
