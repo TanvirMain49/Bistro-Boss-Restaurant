@@ -6,6 +6,8 @@ import {
   LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
+import authImg from '../../assets/others/authentication2.png'
+import './Login.css'
 
 const Login = () => {
   const captchaRef = useRef(null);
@@ -38,19 +40,19 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col md:flex-row items-center justify-center py-10 mt-20 bg-gray-100 w-10/12 mx-auto">
+    <div className="login-page py-16">
+      <div className="flex flex-col md:flex-row items-center justify-center border-4 border-gray-100 shadow-2xl py-10 w-10/12 mx-auto">
         {/* Left Side Image */}
         <div className="flex-1 flex justify-center items-center">
           <img
-            src="your-image-path.jpg"
+            src={authImg}
             alt="Decorative Image"
-            className="max-w-md md:max-w-sm rounded-lg shadow-lg object-cover"
+            className="max-w-md md:max-w-lg object-cover"
           />
         </div>
 
         {/* Login Form */}
-        <div className="flex-1 max-w-lg bg-transparent bg-opacity-90 p-8 rounded-lg mx-4">
+        <div className="flex-1 max-w-lg bg-opacity-90 p-8 rounded-lg mx-4">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Login
           </h2>
@@ -59,7 +61,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-lg font-semibold text-gray-700"
               >
                 Email
               </label>
@@ -68,7 +70,7 @@ const Login = () => {
                 id="email"
                 name="email"
                 placeholder="Type here"
-                className="w-full bg-transparent border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className="w-full bg-white text-black border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 required
               />
             </div>
@@ -77,7 +79,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-lg font-semibold text-gray-700"
               >
                 Password
               </label>
@@ -86,7 +88,7 @@ const Login = () => {
                 id="password"
                 name="password"
                 placeholder="Enter your password"
-                className="w-full bg-transparent border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className="w-full bg-white text-black border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 required
               />
             </div>
@@ -102,12 +104,12 @@ const Login = () => {
                 name="captcha"
                 placeholder="Type here"
                 ref={captchaRef}
-                className="w-full bg-transparent border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                className="w-full bg-white text-black border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
               />
               <button
                 type="button"
                 onClick={handleCaptcha}
-                className="btn btn-outline w-full btn-xm my-2 btn-info"
+                className="btn btn-outline w-full btn-xm my-4 btn-info"
               >
                 Verify Captcha
               </button>
