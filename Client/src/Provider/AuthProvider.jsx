@@ -9,7 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import auth from "../Firebase/Firebase.init";
 
 export const AuthContext = createContext();
@@ -47,17 +47,17 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
         setUser(currentUser);
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API_CALL}jwt`,
-          { email: currentUser?.email },
-          { withCredentials: true }
-        );
+        // const { data } = await axios.post(
+        //   `${import.meta.env.VITE_API_CALL}jwt`,
+        //   { email: currentUser?.email },
+        //   { withCredentials: true }
+        // );
       } else {
         setUser(currentUser);
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_API_CALL}logout`,
-          { withCredentials: true }
-        );
+        // const { data } = await axios.get(
+        //   `${import.meta.env.VITE_API_CALL}logout`,
+        //   { withCredentials: true }
+        // );
       }
       setLoader(false);
     });
