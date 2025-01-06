@@ -4,6 +4,7 @@ import Footer from "../Shared/Footer";
 import Home from "../Pages/Home/Home";
 import Menu from "../Pages/Menu/Menu";
 import Order from "../Pages/OurOrder/Order";
+import Login from "../Pages/Auth/Login";
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
         }
       ]
     },
+    {
+      path:'/login',
+      element:<Login></Login>
+    }
   ]);
 
   export default router;
