@@ -39,7 +39,7 @@ const Navbar = () => {
             <NavLink to="order">OUR SHOP</NavLink>
           </ul>
         </div>
-        <Link className="titleFont">
+        <Link to='/' className="titleFont">
           <span className="text-xl font-bold">BISTRO BOSS</span>
           <br />
           <span className="text-base">Restaurant</span>
@@ -53,8 +53,8 @@ const Navbar = () => {
             <Link>CONTACT US</Link>
             <Link>DASHBOARD</Link>
             <Link to="menu">OUR MENU</Link>
-            {user && <NavLink to="order/salad">OUR SHOP</NavLink>}
-            <NavLink className="text-xl flex relative pr-5">
+            <NavLink to="order/salad">OUR SHOP</NavLink>
+            <NavLink to='/dashboard/myCart'  className="text-xl flex relative pr-5">
               <FaShoppingCart/>
               <div className="badge badge-secondary rounded-full absolute -top-2 left-3">{cart.length}</div>
             </NavLink>
