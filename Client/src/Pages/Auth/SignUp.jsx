@@ -1,14 +1,20 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { FaFacebookF, FaGoogle, FaGithub } from "react-icons/fa";
+import { useContext} from "react";
 import authImg from "../../assets/others/authentication2.png";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import SocialAcc from "../../Shared/SocialAcc";
 
 const SignUp = () => {
   const { createUser, updatePfp } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+
+
   const {
     register,
     handleSubmit,
@@ -21,6 +27,25 @@ const SignUp = () => {
     .then(result => {
         const loggedUser = result.user;
         updatePfp({ displayName: data.name, photoURL: data.photoURL })
+        const user = {
+          name: data.name,
+          email: data.email,
+          photoURL: data.photoURL
+        }
+        axiosPublic.post('users', user)
+        .then(res=>{
+          if(res.data.insertedId ){
+            console.log('user signed up', user);
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Sign up successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate('/')
+          }
+        })
     })
     .catch(error=>{
         console.log(error.message);
@@ -162,31 +187,7 @@ const SignUp = () => {
             <p className="text-base font-semibold text-center text-neutral-600 mt-4">
               or sign up{" "}
             </p>
-
-            {/* Social Login */}
-            <div className="flex items-center justify-center mt-4 space-x-4">
-              {/* Facebook Icon */}
-              <a
-                href="#"
-                className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-blue-500 hover:text-blue-500"
-              >
-                <FaFacebookF />
-              </a>
-              {/* Google Icon */}
-              <a
-                href="#"
-                className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-red-500 hover:text-red-500"
-              >
-                <FaGoogle />
-              </a>
-              {/* Github Icon */}
-              <a
-                href="#"
-                className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-black hover:text-black"
-              >
-                <FaGithub />
-              </a>
-            </div>
+            <SocialAcc></SocialAcc>
           </form>
         </div>
       </div>

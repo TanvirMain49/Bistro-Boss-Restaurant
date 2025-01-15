@@ -32,7 +32,29 @@ async function run() {
 
     const menuCollection = client.db('BistroBoss').collection('Menu');
     const cartCollection = client.db('BistroBoss').collection('cart');
+    const usersCollection = client.db('BistroBoss').collection('user');
 
+
+// userCollection apis
+
+// create user
+app.post('/users', async(req, res)=>{
+  const user = req.body;
+  const query = {email: user.email};
+  const existing = await usersCollection.findOne(query);
+  if(existing){
+    return res.send({message:"User already exist", insertedId:null})
+  }
+  const result = await usersCollection.insertOne(user);
+  res.send(result);
+})
+
+
+
+// menuCollection apis
+
+
+//get menu
     app.get('/menu', async(req, res)=>{
         const result = await menuCollection.find().toArray();
         res.send(result);
@@ -63,8 +85,6 @@ app.delete('/carts/:id', async(req, res)=>{
   const result = await cartCollection.deleteOne(query);
   res.send(result);
 })
-
-
 
 
   } finally {

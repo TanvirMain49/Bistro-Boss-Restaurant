@@ -12,6 +12,7 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import SocialAcc from "../../Shared/SocialAcc";
 
 const Login = () => {
   const { logIn } = useContext(AuthContext);
@@ -142,29 +143,7 @@ const Login = () => {
             </p>
 
             {/* Social Login */}
-            <div className="flex items-center justify-center mt-4 space-x-4">
-              {/* Facebook Icon */}
-              <a
-                href="#"
-                className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-blue-500 hover:text-blue-500"
-              >
-                <FaFacebookF />
-              </a>
-              {/* Google Icon */}
-              <a
-                href="#"
-                className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-red-500 hover:text-red-500"
-              >
-                <FaGoogle />
-              </a>
-              {/* Github Icon */}
-              <a
-                href="#"
-                className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-black hover:text-black"
-              >
-                <FaGithub />
-              </a>
-            </div>
+            <SocialAcc></SocialAcc>
           </form>
         </div>
       </div>
