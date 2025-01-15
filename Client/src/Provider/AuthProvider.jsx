@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
   sendPasswordResetEmail,
@@ -9,11 +10,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
-// import axios from "axios";
-import auth from "../Firebase/Firebase.init";
+import { app } from "../Firebase/Firebase.init";
 
 export const AuthContext = createContext();
-
+const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   // State to hold the current authenticated user
   const [user, setUser] = useState(null);
@@ -47,6 +47,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
         setUser(currentUser);
+        console.log(currentUser);
         // const { data } = await axios.post(
         //   `${import.meta.env.VITE_API_CALL}jwt`,
         //   { email: currentUser?.email },

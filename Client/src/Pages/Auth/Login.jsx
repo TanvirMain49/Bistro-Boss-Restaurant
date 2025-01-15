@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { FaFacebookF, FaGoogle, FaGithub } from "react-icons/fa";
+import Swal from 'sweetalert2'
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -15,7 +16,6 @@ import { Helmet } from "react-helmet-async";
 const Login = () => {
   const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
-  const captchaRef = useRef(null);
   const [btnDisable, setBtnDisable] = useState(true);
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -29,6 +29,11 @@ const Login = () => {
     logIn(email, password)
       .then((res) => {
         const user = res.user;
+        Swal.fire({
+            title: "Welcome Back!",
+            text: "You Logged in successfully!",
+            icon: "success"
+          });
         navigate('/')
       })
       .catch((error) => {
@@ -38,8 +43,8 @@ const Login = () => {
     // You can now use these values for further processing (e.g., API call)
   };
 
-  const handleCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
+  const handleCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
     if (validateCaptcha(user_captcha_value)) {
       setBtnDisable(false);
     } else {
@@ -114,20 +119,14 @@ const Login = () => {
                 id="captcha"
                 name="captcha"
                 placeholder="Type here"
-                ref={captchaRef}
-                className="w-full bg-white text-black border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                onBlur={handleCaptcha}
+                className="w-full bg-white text-black border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent mb-2"
               />
-              <button
-                type="button"
-                onClick={handleCaptcha}
-                className="btn btn-outline w-full btn-xm my-4 btn-info"
-              >
-                Verify Captcha
-              </button>
             </div>
 
             <input
               type="submit"
+              value="login"
               disabled={btnDisable}
               className="btn w-full bg-[#D1A054] hover:bg-[#8a6020] text-white font-bold py-2 rounded-md "
             />

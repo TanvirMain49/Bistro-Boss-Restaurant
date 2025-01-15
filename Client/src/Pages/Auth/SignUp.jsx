@@ -8,7 +8,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updatePfp } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -20,7 +20,7 @@ const SignUp = () => {
     createUser(data.email, data.password)
     .then(result => {
         const loggedUser = result.user;
-        console.log(loggedUser);
+        updatePfp({ displayName: data.name, photoURL: data.photoURL })
     })
     .catch(error=>{
         console.log(error.message);
@@ -65,6 +65,25 @@ const SignUp = () => {
               />
               {errors.name && (
                 <span className="text-red-500 mt-2">Name required</span>
+              )}
+            </div>
+            {/* PhotoUrl */}
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-lg font-semibold text-gray-700"
+              >
+                PhotoUrl
+              </label>
+              <input
+                type="text"
+                name="photoURL"
+                placeholder="Enter your photoUrl"
+                className="w-full bg-white text-black border border-gray-300 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                {...register("photoURL", { required: true })}
+              />
+              {errors.photoURL && (
+                <span className="text-red-500 mt-2">photoURL required</span>
               )}
             </div>
             {/* Email Input */}
