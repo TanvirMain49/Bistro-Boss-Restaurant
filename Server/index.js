@@ -120,20 +120,25 @@ app.patch('/users/admin/:id', async(req, res)=>{
 // delete user
 app.delete('/users/:id', verifyToken, verifyAdmin, async(req, res)=>{
   const id = req.params.id;
-  const query = {_id: new ObjectId(id)}
-  const result = await usersCollection.deleteOne(query)
-  res.send(result)
+  const query = {_id: new ObjectId(id)};
+  const result = await usersCollection.deleteOne(query);
+  res.send(result);
 })
 
 
-
 // menuCollection apis
+//post menu
+app.post('/menu', verifyToken, verifyAdmin, async(req, res)=>{
+  const item = req.body;
+  const result = await menuCollection.insertOne(item);
+  res.send(result);
+})
 
 //get menu
-    app.get('/menu', async(req, res)=>{
-        const result = await menuCollection.find().toArray();
-        res.send(result);
-    })
+app.get('/menu', async(req, res)=>{
+  const result = await menuCollection.find().toArray();
+  res.send(result);
+})
 
 
 // cartCollection apis
