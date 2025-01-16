@@ -78,7 +78,6 @@ app.get('/users', verifyToken, verifyAdmin, async(req, res)=>{
 // just and api to cheek if the user is admin or not return true or false value
 app.get('/users/admin/:email', verifyToken, async(req, res)=>{
   const email = req.params.email;
-
   //cheeking if the user is using this token or not (aka verifyToken () work)
   if(email !== req.decoded.email){
     return res.status(403).send({message: "forbidden access"})
@@ -119,7 +118,7 @@ app.patch('/users/admin/:id', async(req, res)=>{
 })
 
 // delete user
-app.delete('/users/:id', async(req, res)=>{
+app.delete('/users/:id', verifyToken, verifyAdmin, async(req, res)=>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)}
   const result = await usersCollection.deleteOne(query)
@@ -129,7 +128,6 @@ app.delete('/users/:id', async(req, res)=>{
 
 
 // menuCollection apis
-
 
 //get menu
     app.get('/menu', async(req, res)=>{

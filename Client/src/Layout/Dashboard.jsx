@@ -36,7 +36,9 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink className="flex items-center gap-2 uppercase">
+                <NavLink 
+                to="/dashboard/addItem"
+                className="flex items-center gap-2 uppercase">
                   {" "}
                   <IoAdd className="text-xl font-bold" /> Add item
                 </NavLink>
