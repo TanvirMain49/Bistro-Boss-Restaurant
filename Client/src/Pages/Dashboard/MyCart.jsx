@@ -57,8 +57,8 @@ const MyCart = () => {
     <div>
       <SectionHeading Heading="---My Cart---" subHeading="WANNA ADD MORE?" />
       <div className="flex justify-evenly items-center">
-        <h3 className="text-3xl font-semibold">Total orders: {cart.length}</h3>
-        <h3 className="text-3xl font-semibold">total price: ${totalPrice}</h3>
+        <h3 className="text-3xl font-semibold titleFont">Total orders: {cart.length}</h3>
+        <h3 className="text-3xl font-semibold titleFont">total price: ${totalPrice}</h3>
         <button className="btn bg-[#D1A054] text-white">Pay</button>
       </div>
       {/* Table */}
@@ -78,7 +78,7 @@ const MyCart = () => {
           </thead>
           <tbody className="text-center">
             {cart.map((item, idx) => (
-              <tr>
+              <tr key={item._id}>
                 <th>{idx + 1}</th>
                 <td>
                   <div className="flex items-center justify-center gap-3">

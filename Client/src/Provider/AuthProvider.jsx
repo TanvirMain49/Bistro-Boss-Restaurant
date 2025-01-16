@@ -11,6 +11,8 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { app } from "../Firebase/Firebase.init";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -21,6 +23,7 @@ const AuthProvider = ({ children }) => {
   const [forgetEmail, setForgetEmail] = useState(null);
   const [watchList, setWatchList] = useState(null);
   const [dark, setDark] = useState(false);
+  const axiosPublic = useAxiosPublic()
 
   // function to create user
   const createUser = (email, password) => {
@@ -47,18 +50,17 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
         setUser(currentUser);
-        console.log(currentUser);
-        // const { data } = await axios.post(
-        //   `${import.meta.env.VITE_API_CALL}jwt`,
-        //   { email: currentUser?.email },
-        //   { withCredentials: true }
-        // );
+        const userInfo = { email: currentUser.email }
+        axiosPublic.post('jwt', userInfo)
+        .then(res=>{
+          if(res.data.token){
+            localStorage.setItem('access-token', res.data.token)
+          }
+        })
+        
       } else {
         setUser(currentUser);
-        // const { data } = await axios.get(
-        //   `${import.meta.env.VITE_API_CALL}logout`,
-        //   { withCredentials: true }
-        // );
+        localStorage.removeItem('access-token')
       }
       setLoader(false);
     });

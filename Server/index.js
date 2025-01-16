@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = process.env.PORT|| 5000;
 
@@ -34,10 +35,65 @@ async function run() {
     const cartCollection = client.db('BistroBoss').collection('cart');
     const usersCollection = client.db('BistroBoss').collection('user');
 
+// jwt token api
+app.post('/jwt', async(req, res)=>{
+  const user = req.body;
+  const token = jwt.sign(user, process.env.TOKEN, {expiresIn: '1h'});
+  res.send({token});
+})
+
+// middleware
+const verifyToken = (req, res, next)=>{
+  if(!req.headers.authorization){
+    return res.status(401).send({message: "unauthorize access"})
+  }
+  const token = req.headers.authorization.split(' ')[1];
+  jwt.verify(token, process.env.TOKEN, (err, decoded)=>{
+    if(err){
+      return res.status(401).send({message: "unauthorize access"})
+    }
+    req.decoded = decoded;
+    next();
+  })
+}
+// middle ware to cheek if the user is admin or not
+const verifyAdmin = async(req, res, next)=>{
+  const email = req.decoded.email;
+  const query = {email: email}
+  const user = await usersCollection.findOne(query);
+  const isAdmin = user?.role === "Admin"
+  if(!isAdmin){
+    return res.status(403).send({message: "unauthorize access"});
+  }
+  next();
+}
 
 // userCollection apis
+// get all user and need to verifyToken cause this api only admin can use
+app.get('/users', verifyToken, verifyAdmin, async(req, res)=>{
+  const result = await usersCollection.find().toArray();
+  res.send(result);
+})
 
-// create user
+// just and api to cheek if the user is admin or not return true or false value
+app.get('/users/admin/:email', verifyToken, async(req, res)=>{
+  const email = req.params.email;
+
+  //cheeking if the user is using this token or not (aka verifyToken () work)
+  if(email !== req.decoded.email){
+    return res.status(403).send({message: "forbidden access"})
+  }
+  const query = {email: email};
+  const user = await usersCollection.findOne(query);
+  let admin= false;
+  if(user){
+    admin = user.role === "Admin";
+  }
+  res.send({admin});
+
+})
+
+// create user for the website
 app.post('/users', async(req, res)=>{
   const user = req.body;
   const query = {email: user.email};
@@ -47,6 +103,27 @@ app.post('/users', async(req, res)=>{
   }
   const result = await usersCollection.insertOne(user);
   res.send(result);
+})
+
+// update user role to admin. we use patch because we are just updating the role to admin 
+app.patch('/users/admin/:id', async(req, res)=>{
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)}
+  const updateDoc = {
+    $set:{
+      role: 'Admin'
+    }
+  }
+  const result = await usersCollection.updateOne(filter, updateDoc);
+  res.send(result);
+})
+
+// delete user
+app.delete('/users/:id', async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await usersCollection.deleteOne(query)
+  res.send(result)
 })
 
 
