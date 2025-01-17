@@ -139,7 +139,33 @@ app.get('/menu', async(req, res)=>{
   const result = await menuCollection.find().toArray();
   res.send(result);
 })
+//get menu by id
+app.get('/menu/:id', async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await menuCollection.findOne(query);
+  res.send(result);
+})
 
+// patch a menu cart
+app.patch('/menu/:id', async(req, res)=>{
+  const item = req.body;
+  const id = req.params.id;
+  const filter = {_id : new ObjectId(id)};
+  const updateDoc = {
+    $set:{
+      name: item.name,
+      recipe: item.recipe,
+      price: item.price,
+      category: item.category,
+      image: item.image
+    }
+  }
+  const result = await menuCollection.updateOne(filter, updateDoc);
+  res.send(result);
+})
+
+//delete a specific id or cart 
 app.delete('/menu/:id',verifyToken, verifyAdmin, async(req, res)=>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)};

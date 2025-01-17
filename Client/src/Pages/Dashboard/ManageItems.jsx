@@ -5,6 +5,7 @@ import UseMenu from "../../Hooks/UseMenu";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
   const [menu, loader, refetch] = UseMenu();
@@ -50,12 +51,12 @@ const ManageItems = () => {
     {
       name: "Update",
       cell: (row) => (
-        <button
+        <Link
+            to={`updateItem/${row._id}`}
           className="btn text-white bg-[#D1A054] btn-base"
-          onClick={() => handleUpdate(row._id)}
         >
           <FaEdit></FaEdit>
-        </button>
+        </Link>
       ),
       ignoreRowClick: true,
       allowOverflow: true,
@@ -114,18 +115,11 @@ const ManageItems = () => {
     },
   };
 
-  // Handlers for Update and Delete actions
-  const handleUpdate = (id) => {
-    // console.log(`Update item with id: ${id}`);
-    // Add your update logic here
-  };
-
   const handleDelete = (id) => {
-    console.log(id);
     // Add your delete logic here
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "Are you sure you want to delete this item?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -139,7 +133,7 @@ const ManageItems = () => {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Your work has been saved",
+            title: `Deleted successfully`,
             showConfirmButton: false,
             timer: 1500,
           });
