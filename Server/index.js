@@ -126,7 +126,7 @@ app.delete('/users/:id', verifyToken, verifyAdmin, async(req, res)=>{
 })
 
 
-// menuCollection apis
+//! menuCollection apis
 //post menu
 app.post('/menu', verifyToken, verifyAdmin, async(req, res)=>{
   const item = req.body;
@@ -140,8 +140,14 @@ app.get('/menu', async(req, res)=>{
   res.send(result);
 })
 
+app.delete('/menu/:id',verifyToken, verifyAdmin, async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await menuCollection.deleteOne(query);
+  res.send(result);
+})
 
-// cartCollection apis
+//! cartCollection apis
 
 // cart get (all)
 app.get('/carts', async(req,res)=>{
