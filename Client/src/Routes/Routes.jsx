@@ -13,6 +13,8 @@ import PrivateAdminRoutes from "./PrivateAdminRoutes";
 import AddItems from "../Pages/Dashboard/AddItems";
 import ManageItems from "../Pages/Dashboard/ManageItems";
 import UpdateItems from "../Pages/Dashboard/UpdateItems";
+import Payment from "../Pages/Dashboard/Payment";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 
 
 const router = createBrowserRouter([
@@ -61,6 +63,18 @@ const router = createBrowserRouter([
           element: <PrivateAdminRoutes>
             <ManageItems></ManageItems>
           </PrivateAdminRoutes>
+        },
+        {
+          path: '/dashboard/payment',
+          element: <PrivateRoutes>
+            <Payment></Payment>
+          </PrivateRoutes>
+        },
+        {
+          path: '/dashboard/paymentHistory',
+          element: <PrivateRoutes>
+            <PaymentHistory></PaymentHistory>
+          </PrivateRoutes>
         },
         {
           path: '/dashboard/manageItem/updateItem/:id',

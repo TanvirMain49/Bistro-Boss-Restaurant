@@ -80,7 +80,9 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink className="flex items-center gap-2 uppercase">
+                <NavLink
+                to='/dashboard/paymentHistory'
+                 className="flex items-center gap-2 uppercase">
                   {" "}
                   <FaWallet className="text-xl font-bold" /> Payment History
                 </NavLink>
