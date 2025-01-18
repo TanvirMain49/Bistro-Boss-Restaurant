@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
-import img1 from "../assets/others/profile.png";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
+import useAdmin from "../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
+  const isAdmin = useAdmin();
   const [cart] = useCart();
+
   return (
     <div className="navbar fixed z-10 bg-opacity-50 px-9 bg-[#151515] text-white">
       <div className="navbar-start">
@@ -32,14 +34,37 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
-            <NavLink to="/">HOME</NavLink>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? "text-yellow-500" : "text-white"
+              }
+            >
+              HOME
+            </NavLink>
             <NavLink>CONTACT US</NavLink>
-            <NavLink>DASHBOARD</NavLink>
-            <NavLink to="menu">OUR MENU</NavLink>
-            <NavLink to="order">OUR SHOP</NavLink>
+            <NavLink to="/dashboard" className="text-white">
+              DASHBOARD
+            </NavLink>
+            <NavLink
+              to="menu"
+              className={({ isActive }) =>
+                isActive ? "text-yellow-500" : "text-white"
+              }
+            >
+              OUR MENU
+            </NavLink>
+            <NavLink
+              to="order"
+              className={({ isActive }) =>
+                isActive ? "text-yellow-500" : "text-white"
+              }
+            >
+              OUR SHOP
+            </NavLink>
           </ul>
         </div>
-        <Link to='/' className="titleFont">
+        <Link to="/" className="titleFont">
           <span className="text-xl font-bold">BISTRO BOSS</span>
           <br />
           <span className="text-base">Restaurant</span>
@@ -49,27 +74,68 @@ const Navbar = () => {
         {/* menu */}
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1 space-x-4 pt-3 pr-5 font-bold">
-            <Link to="/">HOME</Link>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? "text-yellow-500" : "text-white"
+              }
+            >
+              HOME
+            </NavLink>
             <Link>CONTACT US</Link>
-            <Link>DASHBOARD</Link>
-            <Link to="menu">OUR MENU</Link>
-            <NavLink to="order/salad">OUR SHOP</NavLink>
-            <NavLink to='/dashboard/myCart'  className="text-xl flex relative pr-5">
-              <FaShoppingCart/>
-              <div className="badge badge-secondary rounded-full absolute -top-2 left-3">{cart.length}</div>
+            {user && isAdmin && (
+              <NavLink
+                to="/dashboard/adminHome"
+                className={({ isActive }) =>
+                  isActive ? "text-white" : "text-white"
+                }
+              >
+                DASHBOARD
+              </NavLink>
+            )}
+            {user && !isAdmin && (
+              <NavLink
+                to="/dashboard/userHome"
+                className={({ isActive }) =>
+                  isActive ? "text-white" : "text-white"
+                }
+              >
+                DASHBOARD
+              </NavLink>
+            )}
+            <NavLink
+              to="menu"
+              className={({ isActive }) =>
+                isActive ? "text-yellow-500" : "text-white"
+              }
+            >
+              OUR MENU
+            </NavLink>
+            <NavLink
+              to="order/salad"
+              className={({ isActive }) =>
+                isActive ? "text-yellow-500" : "text-white"
+              }
+            >
+              OUR SHOP
+            </NavLink>
+            <NavLink
+              to="/dashboard/myCart"
+              className="text-xl flex relative pr-5"
+            >
+              <FaShoppingCart />
+              <div className="badge badge-secondary rounded-full absolute -top-2 left-3">
+                {cart.length}
+              </div>
             </NavLink>
           </ul>
-          {user ? (
-            <></>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="btn  bg-[#D1A054] hover:bg-[#8a6020] text-white font-semibold py-1 rounded-md "
-              >
-                Log in
-              </Link>
-            </>
+          {!user && (
+            <Link
+              to="/login"
+              className="btn bg-[#D1A054] hover:bg-[#8a6020] text-white font-semibold py-1 rounded-md"
+            >
+              Log in
+            </Link>
           )}
         </div>
         {user && (
@@ -80,7 +146,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-16 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                <img alt="Profile" src={user?.photoURL} />
               </div>
             </div>
             <ul

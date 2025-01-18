@@ -1,7 +1,5 @@
 import {
   CardElement,
-  Elements,
-  PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";

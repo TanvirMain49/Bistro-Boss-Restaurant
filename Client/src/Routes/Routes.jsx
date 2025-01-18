@@ -15,6 +15,8 @@ import ManageItems from "../Pages/Dashboard/ManageItems";
 import UpdateItems from "../Pages/Dashboard/UpdateItems";
 import Payment from "../Pages/Dashboard/Payment";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import UserHome from "../Pages/Dashboard/UserHome";
+import AdminHome from "../Pages/Dashboard/AdminHome";
 
 
 const router = createBrowserRouter([
@@ -47,22 +49,16 @@ const router = createBrowserRouter([
       </PrivateRoutes>,
       children:[
         {
+          path: '/dashboard/userHome',
+          element:<PrivateRoutes>
+           <UserHome></UserHome>
+          </PrivateRoutes>
+        },
+        {
           path: '/dashboard/myCart',
-          element:<MyCart></MyCart>
-        },
-
-        // Admin routes
-        {
-          path: '/dashboard/addItem',
-          element: <PrivateAdminRoutes>
-            <AddItems></AddItems>
-          </PrivateAdminRoutes>
-        },
-        {
-          path: '/dashboard/manageItem',
-          element: <PrivateAdminRoutes>
-            <ManageItems></ManageItems>
-          </PrivateAdminRoutes>
+          element:<PrivateRoutes>
+            <MyCart></MyCart>
+          </PrivateRoutes>
         },
         {
           path: '/dashboard/payment',
@@ -76,12 +72,32 @@ const router = createBrowserRouter([
             <PaymentHistory></PaymentHistory>
           </PrivateRoutes>
         },
+
+        // Admin routes
+        {
+          path: '/dashboard/adminHome',
+          element: <PrivateAdminRoutes>
+            <AdminHome></AdminHome>
+          </PrivateAdminRoutes>
+        },
+        {
+          path: '/dashboard/addItem',
+          element: <PrivateAdminRoutes>
+            <AddItems></AddItems>
+          </PrivateAdminRoutes>
+        },
+        {
+          path: '/dashboard/manageItem',
+          element: <PrivateAdminRoutes>
+            <ManageItems></ManageItems>
+          </PrivateAdminRoutes>
+        },
         {
           path: '/dashboard/manageItem/updateItem/:id',
           element: <PrivateAdminRoutes>
             <UpdateItems></UpdateItems>
           </PrivateAdminRoutes>,
-          loader: ({params})=> fetch(`http://localhost:5000/menu/${params.id}`)
+          loader: ({params})=> fetch(`https://server-psi-sandy.vercel.app/menu/${params.id}`)
         },
         {
           path: '/dashboard/allUsers',

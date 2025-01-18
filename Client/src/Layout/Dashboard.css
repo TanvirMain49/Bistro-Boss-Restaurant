@@ -1,3 +1,13 @@
-/* .active{
-    color: white;
-} */
+.nav-link {
+    color: black; /* Default text color for links */
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .nav-link.active {
+    color: white; /* Highlighted color for active links */
+  }
+  
+  .nav-link:hover {
+    color: #facc15; /* Slightly lighter yellow on hover */
+  }
+  

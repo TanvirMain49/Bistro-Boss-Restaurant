@@ -27,10 +27,10 @@ async function run() {
   try {
 
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     const menuCollection = client.db('BistroBoss').collection('Menu');
     const cartCollection = client.db('BistroBoss').collection('cart');
@@ -243,6 +243,32 @@ async function run() {
       };
       const deletedRes = await cartCollection.deleteMany(query);
       res.send({ paymentRes, deletedRes });
+    })
+
+    // admin 
+    app.get('/admin-state', async(req, res)=>{
+      const user = await usersCollection.estimatedDocumentCount();
+      const menuItem = await menuCollection.estimatedDocumentCount();
+      const payment = await paymentCollection.estimatedDocumentCount();
+
+      const result = await paymentCollection.aggregate([
+        {
+          $group: {
+            _id:null,
+            totalRevenue:{
+              $sum: '$price'
+            }
+          }
+        }
+      ]).toArray();
+      const revenue = result.length > 0 ? result[0].totalRevenue : 0;
+
+      res.send({
+        user,
+        menuItem,
+        payment,
+        revenue
+      })
     })
 
 
